@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Country Trivia | RickCodes</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Font awesome CDN -->
+    <script
+      src="https://kit.fontawesome.com/6e16941513.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- Button to start Quiz -->
+    <div class="start_btn"><button>Start Quiz</button></div>
+
+    <!-- Box cointaing Information -->
+    <div class="info_box">
+      <div class="info_title">
+        <span>Rules about the Game</span>
+      </div>
+      <div class="info_list">
+        <div class="info">
+          1. You will have only <span>7 seconds</span> per each question.
+        </div>
+        <div class="info">
+          2. Once you select an answer, you can't reselect.
+        </div>
+        <div class="info">
+          3. Once time is up, you can't select an answer that time.
+        </div>
+        <div class="info">
+          4. You can't exit the Quiz while you are playing.
+        </div>
+        <div class="info">5. You will get points on every correct answer.</div>
+      </div>
+      <div class="buttons">
+        <button class="quit">Exit Game</button>
+        <button class="restart">Continue</button>
+      </div>
+    </div>
+
+    <!-- Quiz Box -->
+    <div class="quiz_box">
+      <header>
+        <div class="title">Country Trivia Game</div>
+        <div class="timer">
+          <div class="time_text">Time Left</div>
+          <div class="timer_sec">7</div>
+        </div>
+      </header>
+      <section>
+        <div class="que_text">
+          <span>What does HTML stand for?</span>
+        </div>
+        <div class="option_list">
+          <div class="option">
+            <span>Hyper Text Preprocessor</span>
+            <div class="icon tick"><i class="fas fa-check"></i></div>
+          </div>
+          <div class="option">
+            <span>Hyper Text Preprocessor</span>
+            <div class="icon cross"><i class="fas fa-times"></i></div>
+          </div>
+          <div class="option">
+            <span>Hyper Text Preprocessor</span>
+          </div>
+          <div class="option">
+            <span>Hyper Text Preprocessor</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz Box Footer -->
+      <footer>
+        <div class="total_que">
+          <span
+            ><p>2</p>
+            Of
+            <p>5</p>
+            Questions</span
+          >
+        </div>
+        <button class="next_btn">Next</button>
+      </footer>
+    </div>
+
+    <!-- Result Box -->
+    <div class="result_box">
+      <div class="icon">
+        <i class="fas fa-crown"></i>
+      </div>
+      <div class="complete_text">Congratulations, You won this round!</div>
+      <!-- <div class="icon">
+        <i class="fas fa-face-sad-tear"></i>
+      </div>
+      <div class="complete_text">Unfortunately, you lost this round</div> -->
+      <div class="score_text">
+        <span
+          >and sorry, You got only
+          <p>2</p>
+          out of
+          <p>5</p></span
+        >
+      </div>
+      <div class="buttons">
+        <button class="restart">Restart</button>
+        <button class="quit">Quit</button>
+      </div>
+    </div>
+  </body>
+</html>

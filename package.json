@@ -1,0 +1,22 @@
+{
+  "name": "triviagame",
+  "version": "1.0.0",
+  "description": "A Fun Trivia Game about different countries of the world",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RicqCodes/Trivia.git"
+  },
+  "author": "RicqCodes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RicqCodes/Trivia/issues"
+  },
+  "homepage": "https://github.com/RicqCodes/Trivia#readme",
+  "dependencies": {
+    "country-json": "^1.1.2"
+  }
+}
