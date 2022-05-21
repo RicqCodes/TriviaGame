@@ -1,6 +1,6 @@
 /* Importing google fonts */
 
-@import url('https"//font.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rancho&effect=shadow-multiple');
 
 * {
   margin: 0;
@@ -97,6 +97,7 @@ body {
 .buttons button.restart {
   color: #fff;
   background: #99c459;
+  cursor: pointer;
 }
 
 .buttons button.restart:hover {
@@ -336,4 +337,12 @@ footer .next_btn:hover {
   border: 1px solid;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.correct {
+  background-color: #28a745;
+}
+
+.incorrect {
+  background-color: #dc3545;
 }

@@ -77,9 +77,9 @@
       <footer>
         <div class="total_que">
           <span
-            ><p>2</p>
+            ><p class="current_que_no">2</p>
             Of
-            <p>5</p>
+            <p class="total_que_no">5</p>
             Questions</span
           >
         </div>
@@ -92,17 +92,18 @@
       <div class="icon">
         <i class="fas fa-crown"></i>
       </div>
+
       <div class="complete_text">Congratulations, You won this round!</div>
       <!-- <div class="icon">
         <i class="fas fa-face-sad-tear"></i>
-      </div>
-      <div class="complete_text">Unfortunately, you lost this round</div> -->
+      </div> -->
+      <!-- <div class="complete_text">Unfortunately, you lost this round</div> -->
       <div class="score_text">
-        <span
-          >and sorry, You got only
-          <p>2</p>
+        <span class="win_lose_text"
+          >You scored
+          <p class="correct_score">2</p>
           out of
-          <p>5</p></span
+          <p class="total_poss_que">5</p></span
         >
       </div>
       <div class="buttons">
@@ -110,5 +111,7 @@
         <button class="quit">Quit</button>
       </div>
     </div>
+
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
