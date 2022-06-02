@@ -67,8 +67,6 @@ const startGame = () => {
   allQuestion.textContent = '';
 };
 
-// startGame();
-console.log(score, questionCounter);
 (function () {
   // CREATE A NEW MAP ARRAY FOR COUNTRIES AND CITIES
   countryList = countries.map(country => country.country);
@@ -80,7 +78,6 @@ console.log(score, questionCounter);
     };
   });
 })();
-console.log(questions);
 
 const displayQuestions = function () {
   if (questions.length == 0 || questionCounter > countryList.length) {
@@ -99,8 +96,6 @@ const displayQuestions = function () {
   textQuestion.textContent = `What is the capital of ${questionIndex.question}?`;
 
   countryToCity = countries.find(ctr => ctr.country === questionIndex.question);
-
-  console.log(countryToCity);
 
   // RANDOMLY SELECTED OPTIONS
 
@@ -121,7 +116,6 @@ const displayQuestions = function () {
 const questionTimer = function () {
   const tick = function () {
     const sec = String(time % 60).padStart(2, 0);
-    console.log(time);
 
     // In each call, print the remaining time to UI
     timerSec.textContent = `${sec}`;
@@ -155,19 +149,10 @@ const questionTimer = function () {
 // CHECK ANSWER
 
 const checkAnswer = function () {
-  // const answer = options.forEach(option => option.closest('.option_list'));
-  // console.log(answer);
-
   options.forEach((el, i) => {
     el.addEventListener('click', function (e) {
       e.preventDefault();
       const selectedChoice = e.target;
-
-      if (selectedChoice.textContent === countryToCity.city) {
-        console.log('I found you');
-      } else {
-        console.log('Fuck shit');
-      }
 
       if (selectedChoice.textContent === countryToCity.city) {
         //   const selectedAnswer = selectedChoi;
@@ -176,25 +161,20 @@ const checkAnswer = function () {
         // if (bisGameOn) {
         score += SCORE_POINTS;
         ++correctQuestions;
-        console.log(score);
-        console.log(correctQuestions);
         // }
 
         setTimeout(() => {
           selectedChoice.style.backgroundColor = '';
-          if (score < 200 && bisGameOn) {
+          if (score < 1000 && bisGameOn) {
             displayQuestions();
           } else if (score >= 200) {
             score = 0;
             bisGameOn = false;
-            console.log('Game end');
             removeOpacity(resultCointr);
             addOpacity(quizBox);
             addOpacity(infoBox);
-            console.log(questionCounter);
             correctScore.textContent = `${correctQuestions}`;
             totalQuestn.textContent = `${questionCounter}`;
-            console.log(bisGameOn);
           }
 
           if (timer) clearInterval(timer);
@@ -205,7 +185,7 @@ const checkAnswer = function () {
 
         setTimeout(() => {
           selectedChoice.style.backgroundColor = '';
-          if (score < 200 && bisGameOn) {
+          if (score < 1000 && bisGameOn) {
             displayQuestions();
           }
 
@@ -237,7 +217,6 @@ quitGame.forEach((e, i) =>
 restartGame.forEach(e => {
   e.addEventListener('click', function (e) {
     e.preventDefault();
-    console.log(bisGameOn);
     if (timer) clearInterval(timer);
     timer = questionTimer();
     removeOpacity(quizBox);
