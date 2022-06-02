@@ -176,6 +176,3 @@ nextButton.addEventListener('click', function (e) {
   displayQuestions();
   checkAnswer();
 });
-
-console.log(correctQuestions);
-console.log(questionCounter);
