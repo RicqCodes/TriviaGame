@@ -18,11 +18,9 @@ const winText = document.querySelector('.win_lose_text');
 const correctScore = document.querySelector('.correct_score');
 const totalQuestn = document.querySelector('.total_poss_que');
 const btn = document.querySelector('.buttons');
-const restartGame = document.querySelector('.restart');
-const quitGame = document.querySelector('.quit');
+const restartGame = document.querySelectorAll('.restart');
+const quitGame = document.querySelectorAll('.quit');
 const options = document.querySelectorAll('.option');
-const correctTick = document.querySelector('.icon.tick');
-const wrongTick = document.querySelector('.cross');
 
 // ALL FUNCTIONS
 const removeOpacity = function (element) {
@@ -53,39 +51,51 @@ let countryToCity;
 let questionCounter = 0;
 let questions = [{}];
 let score = 0;
+let timer;
 let correctQuestions = 0;
 const SCORE_POINTS = 100;
+let bisGameOn = true;
 
 const MAX_QUESTIONS = questions.length;
 
 const startGame = () => {
+  bisGameOn = true;
   questionCounter = 0;
   score = 0;
+  correctQuestions = 0;
+  curQuestionNo.textContent = '';
+  allQuestion.textContent = '';
 };
 
-// CREATE A NEW MAP ARRAY FOR COUNTRIES AND CITIES
-countryList = countries.map(country => country.country);
-cityList = countries.map(country => country.city);
-questions = countries.map(que => {
-  return {
-    question: que.country,
-    city: que.city,
-  };
-});
+// startGame();
+console.log(score, questionCounter);
+(function () {
+  // CREATE A NEW MAP ARRAY FOR COUNTRIES AND CITIES
+  countryList = countries.map(country => country.country);
+  cityList = countries.map(country => country.city);
+  questions = countries.map(que => {
+    return {
+      question: que.country,
+      city: que.city,
+    };
+  });
+})();
+console.log(questions);
 
 const displayQuestions = function () {
-  //   if (questions.length == 0 || questionCounter > MAX_QUESTIONS) {
-  //     localStorage.setItem('mostRecentScore', score);
-  //     return window.location.assign('/end.html');
-  //   }
+  if (questions.length == 0 || questionCounter > countryList.length) {
+    localStorage.setItem('mostRecentScore', score);
+    return window.location.assign('/end.html');
+  }
 
-  ++questionCounter;
+  questionCounter++;
 
   curQuestionNo.textContent = `${questionCounter}`;
+
   allQuestion.textContent = `${questions.length}`;
 
   //UPDATE QUESTION
-  let questionIndex = questions[generateRand(1, countryList.length)];
+  let questionIndex = questions[generateRand(1, questions.length)];
   textQuestion.textContent = `What is the capital of ${questionIndex.question}?`;
 
   countryToCity = countries.find(ctr => ctr.country === questionIndex.question);
@@ -95,7 +105,7 @@ const displayQuestions = function () {
   // RANDOMLY SELECTED OPTIONS
 
   choices = [
-    countryToCity.city,
+    questionIndex.city,
     cityList[generateRand(1, cityList.length)],
     cityList[generateRand(1, cityList.length)],
     cityList[generateRand(1, cityList.length)],
@@ -103,76 +113,145 @@ const displayQuestions = function () {
   randomizeArray(choices);
 
   options.forEach((el, i) => {
-    el.textContent = '';
-    el.insertAdjacentText('afterbegin', choices[i]);
+    el.innerHTML = choices[i];
+    // el.insertAdjacentText('afterbegin', choices[i]);
   });
+};
+
+const questionTimer = function () {
+  const tick = function () {
+    const sec = String(time % 60).padStart(2, 0);
+    console.log(time);
+
+    // In each call, print the remaining time to UI
+    timerSec.textContent = `${sec}`;
+
+    // When 0 seconds, stop timer and change question
+    if (time === 0) {
+      if (bisGameOn) {
+        // clearInterval(timer);
+        displayQuestions();
+      } else if (!bisGameOn) {
+        clearInterval(timer);
+      }
+      if (timer) clearInterval(timer);
+      timer = questionTimer();
+    }
+
+    // Decrease 1s
+    time--;
+  };
+
+  // Set time to 5 minutes
+  let time = 7;
+
+  // Call the timer every second
+  tick();
+  timer = setInterval(tick, 1000);
+
+  return timer;
 };
 
 // CHECK ANSWER
 
 const checkAnswer = function () {
+  // const answer = options.forEach(option => option.closest('.option_list'));
+  // console.log(answer);
+
   options.forEach((el, i) => {
     el.addEventListener('click', function (e) {
       e.preventDefault();
       const selectedChoice = e.target;
-      //   const selectedAnswer = selectedChoi;
+
       if (selectedChoice.textContent === countryToCity.city) {
+        console.log('I found you');
+      } else {
+        console.log('Fuck shit');
+      }
+
+      if (selectedChoice.textContent === countryToCity.city) {
+        //   const selectedAnswer = selectedChoi;
         selectedChoice.style.backgroundColor = 'green';
 
-        ++correctQuestions;
-
+        // if (bisGameOn) {
         score += SCORE_POINTS;
-
+        ++correctQuestions;
         console.log(score);
-
-        if (score >= 300) {
-          removeOpacity(resultCointr);
-          addOpacity(quizBox);
-          addOpacity(infoBox);
-          correctScore.textContent = `${correctQuestions}`;
-          totalQuestn.textContent = `${questionCounter}`;
-        }
+        console.log(correctQuestions);
+        // }
 
         setTimeout(() => {
           selectedChoice.style.backgroundColor = '';
-          displayQuestions();
+          if (score < 200 && bisGameOn) {
+            displayQuestions();
+          } else if (score >= 200) {
+            score = 0;
+            bisGameOn = false;
+            console.log('Game end');
+            removeOpacity(resultCointr);
+            addOpacity(quizBox);
+            addOpacity(infoBox);
+            console.log(questionCounter);
+            correctScore.textContent = `${correctQuestions}`;
+            totalQuestn.textContent = `${questionCounter}`;
+            console.log(bisGameOn);
+          }
+
+          if (timer) clearInterval(timer);
+          timer = questionTimer();
         }, 1000);
-        console.log('correct answer');
-      } else {
+      } else if (selectedChoice.textContent !== countryToCity.city) {
         selectedChoice.style.backgroundColor = 'red';
+
         setTimeout(() => {
           selectedChoice.style.backgroundColor = '';
-          displayQuestions();
+          if (score < 200 && bisGameOn) {
+            displayQuestions();
+          }
+
+          if (timer) clearInterval(timer);
+          timer = questionTimer();
         }, 1000);
-        console.log('wrong answer');
       }
-      console.log(selectedChoice);
     });
   });
 };
-console.log(options);
 
 // ALL EVENT CALL BACK FUNCTIONS
+
 buttonStart.addEventListener('click', function (e) {
   e.preventDefault();
   removeOpacity(infoBox);
 });
 
-quitGame.addEventListener('click', function (e) {
-  e.preventDefault();
-  addOpacity(infoBox);
-});
+quitGame.forEach((e, i) =>
+  e.addEventListener('click', function (e) {
+    e.preventDefault();
+    addOpacity(infoBox);
+    addOpacity(quizBox);
+    addOpacity(resultCointr);
+    // startGame();
+  })
+);
 
-restartGame.addEventListener('click', function (e) {
-  e.preventDefault();
-  removeOpacity(quizBox);
-  startGame();
-  displayQuestions();
-  checkAnswer();
+restartGame.forEach(e => {
+  e.addEventListener('click', function (e) {
+    e.preventDefault();
+    console.log(bisGameOn);
+    if (timer) clearInterval(timer);
+    timer = questionTimer();
+    removeOpacity(quizBox);
+    addOpacity(resultCointr);
+    startGame();
+    displayQuestions();
+  });
 });
 
 nextButton.addEventListener('click', function (e) {
   e.preventDefault();
+  if (timer) clearInterval(timer);
+  timer = questionTimer();
   displayQuestions();
-  checkAnswer();
+  // checkAnswer();
 });
+checkAnswer();
