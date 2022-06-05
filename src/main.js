@@ -1,5 +1,7 @@
 'use strict';
 
+// import countries from './data.json' assert { type: 'json' };
+
 const buttonStart = document.querySelector('.start_btn');
 const infoBox = document.querySelector('.info_box');
 const quizBox = document.querySelector('.quiz_box');
@@ -42,6 +44,7 @@ const randomizeArray = function (arr) {
 };
 
 // FUNCTION QUESTIONS
+let countries = [];
 let choices = [];
 let countryList = [];
 let cityList = [];
