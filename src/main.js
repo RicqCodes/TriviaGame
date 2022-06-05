@@ -1,7 +1,5 @@
 'use strict';
 
-import countries from './data.json' assert { type: 'json' };
-
 const buttonStart = document.querySelector('.start_btn');
 const infoBox = document.querySelector('.info_box');
 const quizBox = document.querySelector('.quiz_box');
@@ -69,14 +67,19 @@ const startGame = () => {
 
 (function () {
   // CREATE A NEW MAP ARRAY FOR COUNTRIES AND CITIES
-  countryList = countries.map(country => country.country);
-  cityList = countries.map(country => country.city);
-  questions = countries.map(que => {
-    return {
-      question: que.country,
-      city: que.city,
-    };
-  });
+  fetch('./data.json')
+    .then(res => res.json())
+    .then(count => {
+      countries = count;
+      countryList = count.map(country => country.country);
+      cityList = count.map(country => country.city);
+      questions = count.map(que => {
+        return {
+          question: que.country,
+          city: que.city,
+        };
+      });
+    });
 })();
 
 const displayQuestions = function () {
